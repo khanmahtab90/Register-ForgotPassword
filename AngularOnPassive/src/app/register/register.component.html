@@ -22,6 +22,10 @@
                 <label>Confirm Password</label>
                 <input type="password" [(ngModel)]="registerUserData.confirmpassword" name="confirmpassword" class="form-control rounded-0"  required>
               </div>
+              
+              <ngx-recaptcha2 #captchaElem [siteKey]="siteKey"></ngx-recaptcha2>                
+               
+              
               <button type="button" (click)="registerUser()" class="btn btn-primary float-right">Register</button>
              
             </form>

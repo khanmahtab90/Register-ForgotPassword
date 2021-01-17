@@ -10,7 +10,9 @@ import { Router } from '@angular/router'
 })
 export class LoginComponent implements OnInit {
 
-  loginUserData = {}
+  loginUserData = {
+    grant_type:'password'
+  }
 
   constructor(private _auth: AuthService,
               private _router: Router) { }
@@ -24,6 +26,7 @@ export class LoginComponent implements OnInit {
       res => {
         
         console.log(res);
+        this._router.navigate(['/register']);
       },
       err => console.log(err)
     ) 

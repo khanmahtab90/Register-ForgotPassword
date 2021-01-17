@@ -344,6 +344,7 @@ namespace OnPassiveBackEnd.Controllers
             return Ok();
         }
 
+        [HttpPost]
         [AllowAnonymous]
         [Route("ForgotPassword")]
         public async Task<IHttpActionResult> ForgotPassword(ForgotPasswordBindingModel model) 
@@ -353,8 +354,9 @@ namespace OnPassiveBackEnd.Controllers
                 return BadRequest(ModelState);
             }
             var code = await UserManager.FindByEmailAsync(model.Email);
+            var token = await UserManager.GeneratePasswordResetTokenAsync(code.Id);
 
-            var callbackUrl = Url.Link("Default", new { Controller = "Account", Action = "ResetPassword", code = code });
+            //var callbackUrl = Url.Link("Default", new { Controller = "Account", Action = "ResetPassword", code = code });
             
 
             try
@@ -363,20 +365,20 @@ namespace OnPassiveBackEnd.Controllers
 
                 SmtpClient client = new SmtpClient();
                 client.UseDefaultCredentials = false;
-                client.Credentials = new System.Net.NetworkCredential("sender@gmail.com", "senderpassword");
+                client.Credentials = new System.Net.NetworkCredential("khanmahtab999999@gmail.com", "B@b12345a");
                 client.Port = 587;
                 client.Host = "smtp.gmail.com";
                 client.EnableSsl = true;
 
-                MailAddress fromEmail = new MailAddress("sender@gmail.com");
+                MailAddress fromEmail = new MailAddress("khanmahtab999999@gmail.com");
                 MailAddress toEmail = new MailAddress(model.Email);
 
                 System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
                 mail.Subject = "This mail is send from asp.net web api application";
-                mail.Body = "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>";
+                mail.Body = "Please reset your password by clicking here: <a href=\"" + "http://localhost:4200/resetpassword?email="+ model.Email + "&" + "token=" + token + "\">link</a>";
                 mail.From = fromEmail;
                 mail.To.Add(toEmail);
-                client.Send(mail);
+                client.Send(mail); 
                 
             }
             catch (Exception ex)
@@ -395,6 +397,55 @@ namespace OnPassiveBackEnd.Controllers
 
             return Ok();
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("ResetPassword")]
+        public async Task<IHttpActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                
+               
+                // Find the user by email
+                var user = await UserManager.FindByEmailAsync(model.Email);
+
+                if (user != null)
+                {
+                    // reset the user password
+                    var result = await UserManager.ResetPasswordAsync(user.Id, model.Token, model.Password);
+                    if (!result.Succeeded)
+                    {
+                        return BadRequest(ModelState);
+
+                    }
+
+
+
+                }
+            }
+                 catch (Exception ex)
+                {
+                    Exception ex2 = ex;
+                    string errorMessage = string.Empty;
+                    while (ex2 != null)
+                    {
+                        errorMessage += ex2.ToString();
+                        ex2 = ex2.InnerException;
+                    }
+                    return BadRequest();
+
+                }
+
+
+            }
+            return Ok("Password reset done");
+        }
+
+
 
         // POST api/Account/RegisterExternal
         [OverrideAuthentication]

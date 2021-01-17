@@ -8,10 +8,12 @@ import { Router } from '@angular/router'
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-
+  siteKey:string;
   registerUserData = {}
   constructor(private _auth: AuthService,
-              private _router: Router) { }
+              private _router: Router) {
+                this.siteKey = '6LchfzAaAAAAAH91HBFXAK2eVfC-yl7dTz9ZCrg9';
+               }
 
   ngOnInit() {
   }

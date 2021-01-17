@@ -8,17 +8,19 @@ import { AuthService } from '../../auth.service';
 })
 export class ForgotpasswordComponent implements OnInit {
   UserData = {};
+  private emailSent:boolean=false;
   constructor(private _auth: AuthService) { }
 
   ngOnInit() {
     console.log('forgotpasswordngononit')
   }
 
-  ResetPaasword(){
-    this._auth.resetPassword(this.UserData).subscribe(
+  ForgotPaasword(){
+    this._auth.forgotPassword(this.UserData).subscribe(
       res => {
         
-        console.log(res);
+        this.emailSent=true;
+        
       },
       err => console.log(err)
     ) 

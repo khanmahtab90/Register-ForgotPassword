@@ -10,6 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './auth.service';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword/forgotpassword.component';
+import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
+import { NgxCaptchaModule } from 'ngx-captcha';
 
 
 @NgModule({
@@ -17,6 +19,7 @@ import { ForgotpasswordComponent } from './forgotpassword/forgotpassword/forgotp
     LoginComponent,
     RegisterComponent,
     ForgotpasswordComponent,
+    ResetpasswordComponent,
     AppComponent,
     
     
@@ -26,7 +29,8 @@ import { ForgotpasswordComponent } from './forgotpassword/forgotpassword/forgotp
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxCaptchaModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
