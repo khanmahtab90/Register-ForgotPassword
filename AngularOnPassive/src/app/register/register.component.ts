@@ -13,6 +13,7 @@ export class RegisterComponent implements OnInit {
   constructor(private _auth: AuthService,
               private _router: Router) {
                 this.siteKey = '6LchfzAaAAAAAH91HBFXAK2eVfC-yl7dTz9ZCrg9';
+                
                }
 
   ngOnInit() {

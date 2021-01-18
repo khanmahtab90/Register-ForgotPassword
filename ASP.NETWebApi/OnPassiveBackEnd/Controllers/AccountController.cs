@@ -356,7 +356,7 @@ namespace OnPassiveBackEnd.Controllers
             var code = await UserManager.FindByEmailAsync(model.Email);
             var token = await UserManager.GeneratePasswordResetTokenAsync(code.Id);
 
-            //var callbackUrl = Url.Link("Default", new { Controller = "Account", Action = "ResetPassword", code = code });
+           
             
 
             try
@@ -365,12 +365,12 @@ namespace OnPassiveBackEnd.Controllers
 
                 SmtpClient client = new SmtpClient();
                 client.UseDefaultCredentials = false;
-                client.Credentials = new System.Net.NetworkCredential("khanmahtab999999@gmail.com", "B@b12345a");
+                client.Credentials = new System.Net.NetworkCredential("sender@gmail.com", "XXXXXX");
                 client.Port = 587;
                 client.Host = "smtp.gmail.com";
                 client.EnableSsl = true;
 
-                MailAddress fromEmail = new MailAddress("khanmahtab999999@gmail.com");
+                MailAddress fromEmail = new MailAddress("sender@gmail.com");
                 MailAddress toEmail = new MailAddress(model.Email);
 
                 System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
